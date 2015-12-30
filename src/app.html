@@ -1,11 +1,24 @@
 <!doctype html>
-<html>
+<html ng-app="eddTestApp">
   <head>
     <title>Starter</title>
-    <link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css">
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="angular-resource.min.js"></script>
+    <script type="text/javascript" src="angular-route.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="services.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
+    <script type="text/javascript" src="routes.js"></script>
   </head>
-  <body>
-    <h1>Hello World!</h1>
+  <body class="container" ng-controller="eddTestController">
+    <div ng-include src="headerSrc"></div>
+    <div id="container">
+        <div ng-view="">    
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

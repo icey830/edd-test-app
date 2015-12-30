@@ -1,0 +1,13 @@
+<h2>Check your license</h2>
+
+<form novalidate class="simple-form">
+    Item name: <input type="text" ng-model="edd.item_name" class="form-control"/><br />
+    License key: <input type="text" ng-model="edd.license" class="form-control"/><br />
+    <input type="submit" ng-click="submit(edd)" value="Submit" class="btn btn-primary"/>
+    <input type="button" ng-click="reset()" value="Reset" class="btn"/>
+</form>
+<br/>
+<br/>
+<pre>EDD = {{edd | json}}</pre>
+<br/>
+<pre>Response = {{result | json}}</pre>

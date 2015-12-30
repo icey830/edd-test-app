@@ -1,0 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+body {
+    padding-top: 50px;
+}
+
+#container {
+    padding: 39px 0px;
+}
