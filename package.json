@@ -4,7 +4,7 @@
   "description": "NW.js starter project powered by Gulp.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Aluxian/nwjs-starter.git"
+    "url": "git@github.com:hanhdt/edd-test-app.git"
   },
   "scripts": {
     "postinstall": "(cd src && npm install)"

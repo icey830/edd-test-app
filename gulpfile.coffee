@@ -24,8 +24,8 @@ gulp.task 'clean', ->
         macIcns: './assets-osx/icon.icns'
         macZip: true
         macPlist:
-          NSHumanReadableCopyright: 'aluxian.com'
-          CFBundleIdentifier: 'com.aluxian.starter'
+          NSHumanReadableCopyright: 'tgosoftware.com'
+          CFBundleIdentifier: 'com.tgosoftware.ralph'
       .on 'end', ->
         if process.argv.indexOf('--toolbar') > 0
           shelljs.sed '-i', '"toolbar": true', '"toolbar": false', './src/package.json'
