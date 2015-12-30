@@ -1,7 +1,7 @@
 {
-  "name": "starter",
+  "name": "edd-test-app",
   "version": "0.1.0",
-  "description": "NW.js starter project powered by Gulp.",
+  "description": "This is an application for reviewing EDD.",
   "repository": {
     "type": "git",
     "url": "git@github.com:hanhdt/edd-test-app.git"
