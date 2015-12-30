@@ -1,1 +1,1 @@
-eddTestApp = angular.module('eddTestApp', ['ngResource','ngRoute']);
+eddTestApp = angular.module('eddTestApp', ['ngResource','ngRoute','artemdemo.popup']);

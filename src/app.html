@@ -2,8 +2,10 @@
 <html ng-app="eddTestApp">
   <head>
     <title>EDD Test App</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/app.css">
+    <link type="text/css" rel="stylesheet" media="all" href="assets/popup/angular.popup.css">
+    <link type="text/css" rel="stylesheet" media="all" href="assets/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" media="all" ref="assets/css/app.css">
+    
     <script type="text/javascript" src="angular.min.js"></script>
     <script type="text/javascript" src="angular-resource.min.js"></script>
     <script type="text/javascript" src="angular-route.min.js"></script>
@@ -13,8 +15,9 @@
     <script type="text/javascript" src="services.js"></script>
     <script type="text/javascript" src="controllers.js"></script>
     <script type="text/javascript" src="routes.js"></script>
+    <script type="text/javascript" src="assets/popup/angular.popup.min.js"></script>
   </head>
-  <body class="container" ng-controller="eddTestController">
+  <body class="container" ng-controller="eddTestHomeController">
     <div ng-include src="headerSrc"></div>
     <div id="container">
         <div ng-view="">    

@@ -26,6 +26,19 @@ module.exports = {
       }.bind(this));
     }
   },
+  
+  /**
+   * Close the window using the ESC key
+   */
+  closeWithEscKey: function(win){
+      win.onkeyup = function(event){
+          if(event.keyCode == 27){
+              event.preventDefault();
+              win.close();
+              return false;
+          }
+      }
+  },
 
   /**
    * Change the new window policy to open links in the browser or another window.

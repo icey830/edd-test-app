@@ -1,4 +1,4 @@
-eddTestApp.controller("eddTestController", ['$scope','$http', '$routeParams', function ($scope, $http, $routeParams) {
+eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams', '$popup', '$window', function ($scope, $http, $routeParams, $popup, $window) {
     // prepare serving header from template source
     $scope.headerSrc = "tmpl/header.html";
     $scope.master = {};
@@ -17,26 +17,68 @@ eddTestApp.controller("eddTestController", ['$scope','$http', '$routeParams', fu
             $scope.result = response.data;
             console.log("Get license details: " + JSON.stringify(response));
             if(response.data.license === "inactive"){
-                 $http({
-                    method: 'GET',
-                    url: 'http://tgosoftware.localwhois.biz',
-                    params: {edd_action: "activate_license", item_name: edd.item_name, license: edd.license}
-                    }).then(function successCallback(response) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            $scope.result = response.data;
-                            console.log("Activated license details: " + JSON.stringify(response));
-                        }, function errorCallback(response) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            console.log("Activated license details: " + JSON.stringify(response));
-                        });
+                // Confirm activation
+                $popup.confirm({
+                    title: 'Confirm',
+                    template: 'Do you want to active this license of ' + response.data.item_name,
+                    okText: 'OK',
+                    cancelText: 'Cancel',
+                    okTap: function(e) {
+                        // perform activate license
+                        return true;
+                        $http({
+                            method: 'GET',
+                            url: 'http://tgosoftware.localwhois.biz',
+                            params: {edd_action: "activate_license", item_name: edd.item_name, license: edd.license}
+                            }).then(function successCallback(response) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    $scope.result = response.data;
+                                    window.alert("Activated license successfully!");
+                                    
+                                    // Perfrom checking version after activation
+                                    if(response.data.success == true && response.data.license == "valid"){
+                                            $http({
+                                                  method:'GET',
+                                                  url: 'http://tgosoftware.localwhois.biz',
+                                                  params: {edd_action: "get_version", item_name: edd.item_name, license: edd.license} 
+                                               }).then(function successCallback(response){
+                                                   $scope.result = response.data;
+                                                   $popup.confirm({
+                                                        title: "Get version",
+                                                        template: 'Version of ' + response.data.item_name,
+                                                        okText: 'OK',
+                                                        cancelText: 'Cancel',
+                                                        okTap: function(e){
+                                                            window.alert("Links for download packages: " + response.data.download_link);
+                                                            return;
+                                                        }
+                                                    });
+                                               }, function errorCallback(response){
+                                                   $scope.result = response.data;
+                                               });
+                                        
+                                    }
+                                    // $http.get('http://tgosoftware.localwhois.biz', )
+                                }, function errorCallback(response) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    $scope.result = response.data;
+                                    // console.log("Activated license details: " + JSON.stringify(response));
+                                });
+                        
+                    }
+                });
+                   
             }
             else if(response.data.license === "expired"){
                 alert("Your license is expired!");
             }
             else if(response.data.license === "site_inactive"){
                 alert("Your license is activated already!");
+            }
+            else if(response.data.license === "item_name_mismatch"){
+                window.alert("Your license is invalid!");
             }
             else{
                 $http({
@@ -47,17 +89,19 @@ eddTestApp.controller("eddTestController", ['$scope','$http', '$routeParams', fu
                             // this callback will be called asynchronously
                             // when the response is available
                             $scope.result = response.data;
-                            console.log("Deactivated license details: " + JSON.stringify(response));
+                            // console.log("Deactivated license details: " + JSON.stringify(response));
                         }, function errorCallback(response) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            console.log("Deactivated license details: " + JSON.stringify(response));
+                            $scope.result = response.data;
+                            // console.log("Deactivated license details: " + JSON.stringify(response));
                         });
             }
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
-            console.log("Get license details: " + JSON.stringify(response));
+            $scope.result = response;
+            // console.log("Get license details: " + JSON.stringify(response));
         });
     };
     
@@ -66,4 +110,17 @@ eddTestApp.controller("eddTestController", ['$scope','$http', '$routeParams', fu
     };
 
     $scope.reset();
+    
+    // checking connection
+    $window.addEventListener("offline", function(){
+        console.log("Offline");
+      }, false);
+    
+    $window.addEventListener("online", function () {
+        console.log("Online");
+      }, false);
+}]);
+
+eddTestApp.controller("eddTestAboutController", ['$scope','$http', '$routeParams', function ($scope, $http, $routeParams) {
+    console.log("In about!");
 }]);

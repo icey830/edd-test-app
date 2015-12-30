@@ -47,9 +47,12 @@ if (platform.isWindows) {
 windowBehaviour.set(win);
 windowBehaviour.setNewWinPolicy(win);
 
+// Close the window using ESC key
+windowBehaviour.closeWithEscKey(win);
+
 // Add a context menu
 menus.injectContextMenu(win, window, document);
-
+    
 // Reload the app periodically until it loads
 var reloadIntervalId = setInterval(function() {
   if (win.window.navigator.onLine) {
@@ -58,3 +61,17 @@ var reloadIntervalId = setInterval(function() {
     win.reload();
   }
 }, 10 * 1000);
+
+require('dns').resolve('www.google.com', function(err) {
+  if (err){
+     // no connection 
+     console.log("No connection!");
+     window.alert("You're no connection! Activation license need to connection!");
+     win.close(true);
+  }  
+  else{
+     // connection
+     console.log("Connected!");
+     window.alert("You're connected!");
+  }  
+});
