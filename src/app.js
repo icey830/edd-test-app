@@ -66,12 +66,12 @@ require('dns').resolve('www.google.com', function(err) {
   if (err){
      // no connection 
      console.log("No connection!");
-     window.alert("You're no connection! Activation license need to connection!");
+     window.alert("There is no connection! Activation license need to connection!");
      win.close(true);
   }  
   else{
      // connection
      console.log("Connected!");
-     window.alert("You're connected!");
+    //  window.alert("You're connected!");
   }  
 });
