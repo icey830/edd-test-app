@@ -39,7 +39,60 @@ module.exports = {
           }
       }
   },
-
+  
+  bindEvents: function(win, contentWindow){
+      ['focus', 'blur'].forEach(function(name){
+         win.removeAllListeners(name);
+         win.on(name, function(){
+           if(contentWindow.dispatchEvent && contentWindow.Event){
+               contentWindow.dispatchEvent(new contentWindow.Event(name));
+           }  
+         });
+      });
+  },
+  /**
+   * Set an interval to sync the badge and the title
+   */
+  syncBadgeAndTitle: function(win, parentDoc, childDoc){
+    var notifCountRegex = /\((\d)\)/;
+    var defaultTitle = childDoc.title;
+    
+    setInterval(function() {
+        parentDoc.title = childDoc.title;
+        defaultTitle = defaultTitle || childDoc.title;
+        var label = '';
+        if(childDoc.title != defaultTitle){
+            var countMatch = notifCountRegex.exec(childDoc.title);
+            label = countMatch && countMatch[1] || '';
+            
+            if(!label){
+                return;
+            }
+            
+            win.setBadgeLabel(label);
+            
+            if(win.tray){
+                var type = platform.isOSX ? 'menubar' : 'tray';
+                var alert = label ? '_alert' : '';
+                var extension = platform.isOSX ? '.tiff' : '.png';
+                win.tray.icon = 'images/icon_' + type + alert + extension;
+            }
+        }
+        
+    //    require('dns').resolve('www.google.com', function(err) {
+    //         if (err){
+    //             // no connection 
+    //             console.log("No connection!");
+    //             window.alert("There is no connection! Activation license need to connection!");
+    //         }  
+    //         else{
+    //             // connection
+    //             console.log("Connected!");
+    //             //  window.alert("You're connected!");
+    //         }  
+    //    });
+    }, 100 );  
+  },
   /**
    * Change the new window policy to open links in the browser or another window.
    */
