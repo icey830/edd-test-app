@@ -9,7 +9,7 @@
     "height": 600,
     "title": "Starter",
     "icon": "icons/icon.png",
-    "toolbar": false,
+    "toolbar": true,
     "show": false
   },
   "webkit": {
