@@ -6,7 +6,6 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
     
     $scope.submit = function(edd){
        console.log(edd);
-       
        $http({
         method: 'GET',
         url: 'http://tgosoftware.localwhois.biz',
@@ -17,17 +16,6 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
             $scope.result = response.data;
             console.log("Get license details: " + JSON.stringify(response));
             if(response.data.license === "inactive"){
-                // Confirm activation
-                // $popup.confirm({
-                //     title: 'Confirm',
-                //     template: 'Do you want to active this license of ' + response.data.item_name,
-                //     okText: 'OK',
-                //     cancelText: 'Cancel',
-                //     okTap: function(e) {
-                //         // perform activate license
-                //         e.preventDefault();
-                //     }
-                // });
                 $http({
                     method: 'GET',
                     url: 'http://tgosoftware.localwhois.biz',
@@ -56,27 +44,6 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
                                         'Here was the resulting error HTML: \r\n' + html);
                                }
                             });
-                            // var anchor = angular.element('<a/>');
-                            // anchor.css({display: 'none'}); // Make sure it's not visible
-                            // angular.element(document.body).append(anchor); // Attach to document
-
-                            // anchor.attr({
-                            //     href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-                            //     target: '_blank',
-                            //     download: 'filename.csv'
-                            // })[0].click();
-                            // // Clean it up afterwards
-                            // anchor.remove(); 
-                            
-                            // $popup.confirm({
-                            //     title: "Get version",
-                            //     template: 'Version of ' + response.data.item_name,
-                            //     okText: 'OK',
-                            //     cancelText: 'Cancel',
-                            //     okTap: function (e) {
-                            //         console.log("Links for download packages: " + response.data.download_link);
-                            //     }
-                            // });
                         }, function errorCallback(response) {
                             $scope.result = response.data;
                         });
