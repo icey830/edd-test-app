@@ -46,20 +46,16 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
                         }).then(function successCallback(response) {
                             $scope.result = response.data;
                             console.log("Links for download packages: " + response.data.download_link);
-                            window.alert("Download click: " + response.data.download_link);
-                            // $http({method: 'GET', url: response.data.download_link})
-                            // .success(function(data, status, headers, config) {
-                            //     var anchor = angular.element('<a/>');
-                            //     anchor.attr({
-                            //         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-                            //         target: '_blank',
-                            //         download: 'filename.csv'
-                            //     })[0].click();
-
-                            // }).error(function(data, status, headers, config) {
-                            //     // if there's an error you should see it here
-                            //     console.log("Links for download packages: " + data);
-                            // });
+                            // window.alert("Download click: " + response.data.download_link);
+                            $.fileDownload('' + response.data.download_link, {
+                               successCallback: function(url) {
+                                    window.alert('You just got a file download dialog or ribbon for this URL :' + url);
+                               },
+                               failCallback: function(html, url) {
+                                    window.alert('Your file download just failed for this URL:' + url + '\r\n' +
+                                        'Here was the resulting error HTML: \r\n' + html);
+                               }
+                            });
                             // $popup.confirm({
                             //     title: "Get version",
                             //     template: 'Version of ' + response.data.item_name,
