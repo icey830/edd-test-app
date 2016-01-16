@@ -6,7 +6,6 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
     
     $scope.submit = function(edd){
        console.log(edd);
-       
        $http({
         method: 'GET',
         url: 'http://tgosoftware.localwhois.biz',
@@ -17,17 +16,6 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
             $scope.result = response.data;
             console.log("Get license details: " + JSON.stringify(response));
             if(response.data.license === "inactive"){
-                // Confirm activation
-                // $popup.confirm({
-                //     title: 'Confirm',
-                //     template: 'Do you want to active this license of ' + response.data.item_name,
-                //     okText: 'OK',
-                //     cancelText: 'Cancel',
-                //     okTap: function(e) {
-                //         // perform activate license
-                //         e.preventDefault();
-                //     }
-                // });
                 $http({
                     method: 'GET',
                     url: 'http://tgosoftware.localwhois.biz',
@@ -46,25 +34,7 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
                         }).then(function successCallback(response) {
                             $scope.result = response.data;
                             console.log("Links for download packages: " + response.data.download_link);
-                            // window.alert("Download click: " + response.data.download_link);
-                            $.fileDownload('' + response.data.download_link, {
-                               successCallback: function(url) {
-                                    window.alert('You just got a file download dialog or ribbon for this URL :' + url);
-                               },
-                               failCallback: function(html, url) {
-                                    window.alert('Your file download just failed for this URL:' + url + '\r\n' +
-                                        'Here was the resulting error HTML: \r\n' + html);
-                               }
-                            });
-                            // $popup.confirm({
-                            //     title: "Get version",
-                            //     template: 'Version of ' + response.data.item_name,
-                            //     okText: 'OK',
-                            //     cancelText: 'Cancel',
-                            //     okTap: function (e) {
-                            //         console.log("Links for download packages: " + response.data.download_link);
-                            //     }
-                            // });
+                            window.alert("Download click: " + response.data.download_link);
                         }, function errorCallback(response) {
                             $scope.result = response.data;
                         });
