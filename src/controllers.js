@@ -95,6 +95,47 @@ eddTestApp.controller("eddTestHomeController", ['$scope','$http', '$routeParams'
     $scope.reset = function() {
         $scope.edd = angular.copy($scope.master);
     };
+    
+    $scope.edd_license_info = {
+        "license_server": "tgosoftware.com",
+        "customer_name": "[who bought the license]",
+        "email": "user@xyz.com",
+        "license": "[]",
+        "mac": "[Mac address of PC that using our application (is unique to license)]",
+        "license_type": "[PAID or SUBSCRIPTION]",
+        "license_period": "[INFINITY, ANNUAL or MONTHLY]",
+        "license_validity": "[END DATE]",
+        "order": 0,
+        "installed": "[The date user active license key]",
+        "quantity_server": "[The number of keys/licences for STANDALONE applications]",
+        "version_name": "[Version name of current license]",
+        "type": "[Registered or Trial]",
+        "activated": "[Yes if the license is installed, No if not installed yet]",
+        "license_status": "[CURRENT/EXPIRED]",
+        "last_date_check": "[YYY-MM-DD]",
+        "current_date": "[YYY-MM-DD]",
+        "date_reversal_flag": "[YES/NO]",
+        "reversal_date": "[YYYY-MM-DD]",
+        "network_users": "[Qty and only used if application is networked, not for standalone]"
+    };
+    $scope.savedLicenseJSON = '';
+    
+    $scope.writeFile = function(){
+        console.log("Here we are!");
+        $scope.savedJSON = angular.toJson($scope.edd_license_info);
+        var blob = new Blob([$scope.savedJSON],{
+            type: "application/json;charset=utf-8;"
+        }),
+        e = document.createEvent('MouseEvents'),
+        a = document.createElement('a');
+
+        a.download = "license_export.tgo";
+        a.href = window.URL.createObjectURL(blob);
+        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+        e.initMouseEvent('click', true, false, window,
+            0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        a.dispatchEvent(e);
+    };
 
     $scope.reset();
     
