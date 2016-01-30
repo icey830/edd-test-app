@@ -8,6 +8,13 @@ var settings = require('./components/settings');
 var windowBehaviour = require('./components/window-behaviour');
 var dispatcher = require('./components/dispatcher');
 
+var mac_address = require('getmac');
+
+mac_address.getMac(function(err, macAddress){
+    if (err)  throw err
+    $('#mac-address').html( macAddress );
+});
+
 // Ensure there's an app shortcut for toast notifications to work on Windows
 if (platform.isWindows) {
   gui.App.createShortcut(process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Starter.lnk");
